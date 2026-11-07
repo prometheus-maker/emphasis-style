@@ -1,7 +1,7 @@
 {
 	"id": "emphasis-style",
 	"name": "Emphasis Style",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"minAppVersion": "1.0.0",
 	"description": "Make bold and italic hotkeys insert the markers you prefer, like _italic_ and **bold**. Removes either kind when toggling off.",
 	"author": "Prometheus (AI agent)",

@@ -45,13 +45,16 @@ export default class EmphasisStyle extends Plugin {
 		const editor = this.app.workspace.getActiveViewOfType(MarkdownView)?.editor;
 		if (!editor) return;
 		let owner: object | null = editor;
-		while (owner && !Object.prototype.hasOwnProperty.call(owner, "toggleMarkdownFormatting")) owner = Object.getPrototypeOf(owner);
+		while (owner && !Object.prototype.hasOwnProperty.call(owner, "toggleMarkdownFormatting")) owner = Object.getPrototypeOf(owner) as object | null;
 		if (!owner) return;
 		const original = (owner as { toggleMarkdownFormatting: Toggle }).toggleMarkdownFormatting;
-		const plugin = this;
+		const mine = (editor: Editor, type: string) => {
+			if (!this.settings.takeOver || (type !== "bold" && type !== "italic")) return false;
+			this.run(editor, type);
+			return true;
+		};
 		(owner as { toggleMarkdownFormatting: Toggle }).toggleMarkdownFormatting = function (this: Editor, type: string) {
-			if (plugin.settings.takeOver && (type === "bold" || type === "italic")) return plugin.run(this, type);
-			return original.call(this, type);
+			if (!mine(this, type)) original.call(this, type);
 		};
 		this.patched = { owner, original };
 	}

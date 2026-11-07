@@ -4,7 +4,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { test } from "node:test";
-import { applyChanges, toggle } from "../build/logic.mjs";
+import { applyChanges, stripInner, toggle } from "../build/logic.mjs";
 
 const oracle = JSON.parse(readFileSync(new URL("./oracle.json", import.meta.url)));
 const STAR = { bold: "**", italic: "*" }, UNDER = { bold: "**", italic: "_" }, ALLU = { bold: "__", italic: "_" };
@@ -126,4 +126,12 @@ test("one undo step: a cursor toggle is at most two changes, in document order",
 	const r = toggle(doc, sels, "italic", UNDER);
 	assert.equal(r.changes.length, 4);
 	for (let i = 1; i < r.changes.length; i++) assert.ok(r.changes[i].from >= r.changes[i - 1].to);
+});
+
+test("stripInner removes one style only, without lookbehind", () => {
+	assert.equal(stripInner("**a** b __c__", "bold"), "a b c");
+	assert.equal(stripInner("*a* b _c_ d", "italic"), "a b c d");
+	assert.equal(stripInner("**a** *b*", "italic"), "**a** b");
+	assert.equal(stripInner("snake_case_x and *y*", "italic"), "snake_case_x and y");
+	assert.equal(stripInner("x * y * z", "italic"), "x * y * z");
 });

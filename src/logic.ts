@@ -114,7 +114,7 @@ export function toggle(doc: string, sels: Sel[], style: Style, m: Markers): { ch
 	const mark = m[style];
 	const order = sels.map((s, i) => ({ s, i, at: Math.min(s.anchor, s.head) })).sort((x, y) => x.at - y.at);
 	const changes: Change[] = [];
-	const result: Sel[] = new Array(sels.length);
+	const result: Sel[] = sels.map((s) => ({ ...s }));
 	let delta = 0, lastEnd = -1;
 	for (const { s, i } of order) {
 		const rs = ranges(doc, s).filter((r) => r.a >= lastEnd);
@@ -173,8 +173,11 @@ export function toggle(doc: string, sels: Sel[], style: Style, m: Markers): { ch
 
 /** Remove emphasis of one style inside a piece of text ("**a** b" -> "a b" for bold). */
 export function stripInner(text: string, style: Style): string {
-	if (style === "bold") return text.replace(/(\*\*|__)(?=\S)(.+?)(?<=\S)\1/g, "$2");
-	return text.replace(/(?<![*_])([*_])(?=[^\s*_])(.+?)(?<=[^\s*_])\1(?![*_])/g, "$2");
+	// no lookbehind: Obsidian on iOS before 16.4 can't run it
+	if (style === "bold") return text.replace(/(\*\*|__)(\S(?:.*?\S)?)\1/g, "$2");
+	// _x_ only between non-word characters, so snake_case_names stay as they are
+	return text.replace(/(^|[^*])\*([^\s*](?:.*?[^\s*])?)\*(?!\*)/g, "$1$2")
+		.replace(/(^|[^\p{L}\p{N}_])_([^\s_](?:.*?[^\s_])?)_(?![\p{L}\p{N}_])/gu, "$1$2");
 }
 
 /** Apply changes (document order, non-overlapping) to a string: used by tests and as a reference. */

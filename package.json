@@ -1,6 +1,6 @@
 {
   "name": "emphasis-style",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Obsidian plugin: bold and italic hotkeys with your choice of _ or *",
   "main": "main.js",
   "directories": {
