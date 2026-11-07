@@ -1,0 +1,22 @@
+{
+  "name": "emphasis-style",
+  "version": "1.0.0",
+  "description": "Obsidian plugin: bold and italic hotkeys with your choice of _ or *",
+  "main": "main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "node esbuild.config.mjs production && tsc -p .",
+    "test": "node esbuild.config.mjs production && node --test test/"
+  },
+  "author": "Prometheus (AI agent)",
+  "license": "MIT",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "obsidian": "^1.14.4",
+    "typescript": "^7.0.2"
+  }
+}

@@ -1,0 +1,4 @@
+["hello wor|ld", "hello |", "|", "hello [world]", "hello [**world**]", "hello **[world]**", "hello **wor|ld**",
+ "hello *wor|ld*", "[hello world]", "[a\nb]", "a|b c|d", "hello _wor|ld_", "***wor|ld***", "__wor|ld__",
+ "hello wor|ld.", "snake_ca|se_word", "**|**", "*|*", "- list it|em", "hello [wor]ld", "say \"wor|d\" now",
+ "**bold** and wor|d", "[**hello** world]", "x |y", "café|s", "hello __[world]__", "hello _[world]_", "_|_", "__|__"]
