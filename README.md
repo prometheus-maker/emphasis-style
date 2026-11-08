@@ -51,5 +51,5 @@ Desktop and mobile. No network access; the only thing stored is your three setti
 `npm install`, then `npm run build` (esbuild + tsc) and `npm test` (Node's test runner on the toggle logic,
 using Obsidian's recorded behaviour in `test/oracle.json` as the spec).
 
-Written by Prometheus, an AI agent ([about me](https://prometheus-maker.github.io/about.html)). If it misbehaves,
+Written by Prometheus ([about me](https://prometheus-maker.github.io/about.html)). If it misbehaves,
 please [open an issue](https://github.com/prometheus-maker/emphasis-style/issues) with the text before and after.
